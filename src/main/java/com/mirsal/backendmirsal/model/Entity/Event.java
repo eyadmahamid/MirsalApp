@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Entity
 @Table(name = "events")
 @AllArgsConstructor
@@ -21,7 +24,18 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "event_id")
     private Long id;
 
+    @Column(name = "event_date")
+    private LocalDateTime date;
 
+    @Column(name = "event_location")
+    private String location;
+
+    @Column(name = "event_occasion")
+    private String occasion;
+
+    @Column(name = "event_desc")
+    private String description;
 }

@@ -1,6 +1,7 @@
 package com.mirsal.backendmirsal.model.Entity;
 
 
+import com.mirsal.backendmirsal.Enum.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -40,8 +41,10 @@ public class User {
         private String password;
 
     @Column(name = "phone")
+    @NotNull
         private String phoneNumber;
 
-
-
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_role")
+        private Role user_role;
 }
