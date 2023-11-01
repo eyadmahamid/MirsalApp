@@ -1,9 +1,19 @@
 package com.mirsal.backendmirsal.model.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Table(name = "invitation")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Invitation {
 
     /**
@@ -14,7 +24,8 @@ public class Invitation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "invitation_id")
-    private Long id;
+    private Long invitationId;
+
 
     @Column(name = "first_name")
     private String first_name;
@@ -31,4 +42,19 @@ public class Invitation {
     @Column(name = "status")
     private String status;
 
+
+//    The event you are invited to attend
+    @ManyToOne
+    private Event event;
+
+//    The Manager responsible for sending the invitation ,manager can send(phone or email)/delete/update/ invitation for users
+    @ManyToOne
+    private User sender;
+
+    
+    @ManyToMany
+    @JoinTable(name = "invitation_users",
+            joinColumns = @JoinColumn(name = "invitation_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> addByUsers;
 }
