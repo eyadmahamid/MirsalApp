@@ -51,7 +51,7 @@ public class Invitation {
     @ManyToOne
     private User sender;
 
-    
+
     @ManyToMany
     @JoinTable(name = "invitation_users",
             joinColumns = @JoinColumn(name = "invitation_id"),

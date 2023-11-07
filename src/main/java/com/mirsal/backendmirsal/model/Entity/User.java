@@ -54,6 +54,7 @@ public class User {
 //    The user can be a 'MANAGER' to create many events
     @OneToMany(mappedBy = "organizer")
     private List<Event> organizedEvents;
+
 //  Users Registered in the Mirsal.app can be invited to many events
     @ManyToMany(mappedBy = "invitedUsers")
     private List<Event> eventsAttending;
@@ -62,7 +63,6 @@ public class User {
 //    Sending the invitation includes application users and others, this is done by sending an (e-mail or phone number).
     @ManyToMany(mappedBy = "addByUsers")
     private List<Invitation> addedInvitaions;
-
 
 }
 
