@@ -4,11 +4,16 @@ package com.mirsal.backendmirsal.model.Entity;
 import com.mirsal.backendmirsal.Enum.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -16,14 +21,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Where(clause = "deleted_at is null")
 public class User {
 
-    /**
-     * @Entity_User
-     * Purpose: Represents individuals who use the Mirsal app to create and manage events and send invitations.
-     * Attributes: Name, Contact Information, User ID, etc.
-     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -43,8 +44,21 @@ public class User {
         private String password;
 
     @Column(name = "phone")
-    @NotNull
+
         private String phoneNumber;
+
+    @Column(name = "is_active",columnDefinition = "boolean default false")
+    private boolean isActive;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role")

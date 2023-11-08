@@ -1,21 +1,20 @@
 package com.mirsal.backendmirsal.service;
 
+import com.mirsal.backendmirsal.exceptions.UnauthorizedException;
+import com.mirsal.backendmirsal.exceptions.UserNotFoundException;
 import com.mirsal.backendmirsal.model.Entity.User;
-import com.mirsal.backendmirsal.model.dto.UpdateUserReqDTO;
-import com.mirsal.backendmirsal.model.dto.UserDTO;
-import com.mirsal.backendmirsal.model.dto.UserReqDTO;
-import com.mirsal.backendmirsal.model.dto.UserRespoDTO;
+import com.mirsal.backendmirsal.model.dto.*;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface UserService {
 
-    UserDTO get(Long id);
-    void delete(Long id);
-    UserRespoDTO signup(UserReqDTO req);
-    boolean signin(UserReqDTO req);
+    UserDTO get(Long id) throws UnauthorizedException;
+    void delete(Long id ) throws UnauthorizedException;
+    UserRespoDTO signup(UserReqDTO req) throws  UserNotFoundException;
+    UserRespoDTO signin(UserSigninReqDTO req) throws UserNotFoundException;
 
-    UserRespoDTO update(Long id, UpdateUserReqDTO req);
+    UserRespoDTO update(Long id, UpdateUserReqDTO req) throws UserNotFoundException;
 }
 
 

@@ -22,7 +22,11 @@ public class UserReqDTO {
     @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
 
-    @NotNull(message = "Required: Please enter your phone number")
-    @Pattern(regexp = "^[0-9]{10}$", message = "Invalid phone number format. Please provide a 10-digit phone number.")
+//    @NotEmpty(message = "Required: Please enter your phone number")
+//    @Pattern(regexp = "^[0-9]{10}$", message = "Invalid phone number format. Please provide a 10-digit phone number.")
     private String phoneNumber;
+
+
+
+
 }
