@@ -45,10 +45,12 @@ public class Invitation {
 
 //    The event you are invited to attend
     @ManyToOne
+    @JoinColumn(name = "event_id")
     private Event event;
 
 //    The Manager responsible for sending the invitation ,manager can send(phone or email)/delete/update/ invitation for users
     @ManyToOne
+    @JoinColumn(name = "organizer_id")
     private User sender;
 
 

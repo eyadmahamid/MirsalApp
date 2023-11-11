@@ -60,14 +60,15 @@ public class Event {
 
 //    the Manager who created the event
     @ManyToOne
+    @JoinColumn(name = "organizer_id")
     private User organizer;
 
 //    Registered Users who were invited
-    @ManyToMany
-    @JoinTable(name = "event_invitations",
-            joinColumns = @JoinColumn(name = "event_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> invitedUsers;
+@ManyToMany
+@JoinTable(name = "event_invitations",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "event_id"))
+private List<User> invitedUsers;
 
 
 }
