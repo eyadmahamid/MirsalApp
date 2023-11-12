@@ -1,11 +1,12 @@
 package com.mirsal.backendmirsal.model.dto;
 
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
 @Data
 @Builder
+@AllArgsConstructor
 public class UserReqDTO {
 
     @NotNull(message = "Please enter a valid username")
@@ -25,8 +26,4 @@ public class UserReqDTO {
 //    @NotEmpty(message = "Required: Please enter your phone number")
 //    @Pattern(regexp = "^[0-9]{10}$", message = "Invalid phone number format. Please provide a 10-digit phone number.")
     private String phoneNumber;
-
-
-
-
 }

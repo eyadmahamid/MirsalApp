@@ -58,16 +58,16 @@ public class Event {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-//    the Manager who created the event
+    //    the Manager who created the event
     @ManyToOne
+    @JoinColumn(name = "organizer_id")
     private User organizer;
 
-//    Registered Users who were invited
+    //    Registered Users who were invited
     @ManyToMany
     @JoinTable(name = "event_invitations",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> invitedUsers;
-
 
 }

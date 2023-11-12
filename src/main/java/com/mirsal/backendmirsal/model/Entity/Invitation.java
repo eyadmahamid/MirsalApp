@@ -42,19 +42,26 @@ public class Invitation {
     @Column(name = "status")
     private String status;
 
-
-//    The event you are invited to attend
+    //    The event you are invited to attend
     @ManyToOne
+    @JoinColumn(name = "event_id")
     private Event event;
 
-//    The Manager responsible for sending the invitation ,manager can send(phone or email)/delete/update/ invitation for users
+    //    The Manager responsible for sending the invitation ,manager can send(phone or email)/delete/update/ invitation for users
     @ManyToOne
+    @JoinColumn(name = "organizer_id")
     private User sender;
 
-
     @ManyToMany
-    @JoinTable(name = "invitation_users",
+    @JoinTable(name = "addedInvitations",
             joinColumns = @JoinColumn(name = "invitation_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> addByUsers;
+
 }
+
+//org.hibernate.tool.schema.spi.CommandAcceptanceException:
+// Error executing DDL "alter table invitation add constraint FKjlhncqm9351scp9mpk6db7xut
+// foreign key (event_id) references events (event_id)" via JDBC [Failed to add the foreign
+// key constraint. Missing column 'event_id'
+// for constraint 'FKjlhncqm9351scp9mpk6db7xut' in the referenced table 'events']

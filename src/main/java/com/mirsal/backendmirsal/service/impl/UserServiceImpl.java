@@ -1,13 +1,12 @@
 package com.mirsal.backendmirsal.service.impl;
 
 import com.mirsal.backendmirsal.exceptions.UnauthorizedException;
-import com.mirsal.backendmirsal.exceptions.UserNotFoundException;
+import com.mirsal.backendmirsal.exceptions.NotFoundException;
 import com.mirsal.backendmirsal.model.dto.*;
 import com.mirsal.backendmirsal.model.Entity.User;
 import com.mirsal.backendmirsal.model.mapper.Impl.UserMapper;
 import com.mirsal.backendmirsal.repository.UserRepo;
 import com.mirsal.backendmirsal.service.UserService;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,44 +20,43 @@ public class UserServiceImpl implements UserService {
     private final  UserMapper userMapper;
 
     @Override
-    public void delete(Long id )throws UnauthorizedException {
+    public void delete(Long id , UserDeletionReqDTO userDeleteReqDTO)throws UnauthorizedException {
 
-//        Optional<User> userById = this.userRepo.findById(id);
-//
-//        if(!userById.isPresent()){
-//            throw new  UnauthorizedException("user Not Found with ID: " + id);
-//        }
-//        UserRespoDTO getUser = this.userMapper.toRespDTO(userById)
-//        if(!userRespoDTO.isActive()){
-//            throw new UnauthorizedException("User is not active and cannot be deleted.");
-//        }
-//
-//
-//        userById.get().setDeletedAt(LocalDateTime.now());
-//        userRepo.deleteById(id) ;
+        Optional<User> userById = this.userRepo.findById(id);
+        if (!userById.isPresent()) {
+            throw new UnauthorizedException("user Not Found with ID: " + id);
+        }
+        User user = userById.get();
+        // Verify user's password
+        if (!user.getPassword().equals(userDeleteReqDTO.getPassword())) {
+            throw new UnauthorizedException("Invalid password.");
+        }
+        if (!user.isActive()) {
+            throw new UnauthorizedException("User is not active and cannot be deleted.");
+        }
+        user.setDeletedAt(LocalDateTime.now());
+        user.setActive(false);
+        this.userRepo.deleteById(id);
     }
 
     @Override
     public UserDTO get(Long id) throws UnauthorizedException {
+
         Optional<User> userById = this.userRepo.findById(id);
         if(userById.isEmpty()){
-
             User user = userById.get();
             return this.userMapper.toDTO(user);
-
         }
-
         throw new  UnauthorizedException("user Not Found with ID: " + id);
-
     }
 
 
     @Override
-    public UserRespoDTO signup(UserReqDTO req) throws UserNotFoundException {
+    public UserRespoDTO signup(UserReqDTO req) throws NotFoundException {
         String email = req.getEmail();
         Optional<User> userByEmail = this.userRepo.findByEmail(email);
         if(userByEmail.isPresent()){
-            throw new UserNotFoundException("this E-mail is already exists" + email);
+            throw new NotFoundException("this E-mail is already exists" + email);
         }
         User user = this.userMapper.toEntity(req);
         user.setActive(true);
@@ -67,14 +65,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserRespoDTO signin(UserSigninReqDTO req) throws UserNotFoundException {
+    public UserRespoDTO signin(UserSigninReqDTO req) throws NotFoundException {
         String identifier = req.getEmailOrUsername();
         String password = req.getPassword();
 
         User user = this.userRepo.findByEmailOrUsername(identifier, identifier);
 
         if (user == null || !password.equals(user.getPassword())) {
-            throw new UserNotFoundException("Invalid E-mail/username or password");
+            throw new NotFoundException("Invalid E-mail/username or password");
         }
 
         user.setActive(true);
