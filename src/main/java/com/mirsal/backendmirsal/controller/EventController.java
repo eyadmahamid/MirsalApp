@@ -71,7 +71,7 @@ public class EventController {
 //    @GetMapping(value="/event/organizer/{id}")
 //    public ResponseEntity<?> get_organizer_events (@PathVariable EventAdminstratorDTO req) throws UnauthorizedException{
 //        try{
-//            List<EventRespoDTO> organizerEvents = this.eventService.get_organizer_events(req.getUserId());
+//            List<EventRespoDTO> organizerEvents = this.eventService.getOrganizerEvents(req.getUserId());
 //            return ResponseEntity.ok(organizerEvents);
 //        } catch (UnauthorizedException e) {
 //            return badRequest().body(e.getMessage());
