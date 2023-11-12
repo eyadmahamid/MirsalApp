@@ -63,11 +63,20 @@ public class Event {
     @JoinColumn(name = "organizer_id")
     private User organizer;
 
+<<<<<<< HEAD
     //    Registered Users who were invited
     @ManyToMany
     @JoinTable(name = "event_invitations",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> invitedUsers;
+=======
+//    Registered Users who were invited
+@ManyToMany
+@JoinTable(name = "event_invitations",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "event_id"))
+private List<User> invitedUsers;
+>>>>>>> acb1aa0d1240c7d640088b9bead09c544b14d139
 
 }

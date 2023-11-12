@@ -76,4 +76,36 @@ private UserService userService; //bean
 //     Register a new user with email and phone number.
 //     Accepts user registration data (email, phone number) and creates a new user account.
 
+<<<<<<< HEAD
+=======
+
+    @PostMapping(value = "user/signup")
+    public ResponseEntity<?> signup(@Valid @RequestBody UserReqDTO user) {
+        try {
+            UserRespoDTO addAcount = this.userService.signup(user);
+            return ok(addAcount);
+        } catch (UserNotFoundException e) {
+            return badRequest().body(e.getMessage());
+        }
+    }
+
+
+
+    // Authenticate a user by email/phone number.
+    @PostMapping("user/signin")
+    public ResponseEntity<?> signin(@Valid @RequestBody UserSigninReqDTO user) throws UserNotFoundException {
+            String checkEmailOrUsername = user.getEmailOrUsername();
+            String password = user.getPassword();
+        try{
+
+          UserRespoDTO login =  userService.signin(user);
+            return ResponseEntity.ok(login);
+        }catch (UserNotFoundException e){
+                return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
+
+>>>>>>> acb1aa0d1240c7d640088b9bead09c544b14d139
 }

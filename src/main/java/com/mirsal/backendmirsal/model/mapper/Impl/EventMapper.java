@@ -11,6 +11,7 @@ public interface EventMapper {
 
     Event toEntity(EventReqDTO dto);
     Event toEntity(UpdateEventReqDTO dto);
+
     EventRespoDTO toRespDTO(Event Entity);
     EventDTO toDTO(Event Entity);
 }

@@ -2,10 +2,7 @@ package com.mirsal.backendmirsal.model.mapper.Impl;
 
 
 import com.mirsal.backendmirsal.model.Entity.User;
-import com.mirsal.backendmirsal.model.dto.UpdateUserReqDTO;
-import com.mirsal.backendmirsal.model.dto.UserDTO;
-import com.mirsal.backendmirsal.model.dto.UserReqDTO;
-import com.mirsal.backendmirsal.model.dto.UserRespoDTO;
+import com.mirsal.backendmirsal.model.dto.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
@@ -16,6 +13,7 @@ public interface UserMapper {
     User toEntity(UpdateUserReqDTO dto);
     UserRespoDTO toRespDTO(User Entity);
     UserDTO toDTO(User Entity);
+
 }
 
 /**
