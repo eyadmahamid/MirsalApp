@@ -154,11 +154,13 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventDTO get(Long event_id) throws UnauthorizedException {
+
         return null;
     }
 
     @Override
     public List<EventDTO> get_admin_events(Long user_id) throws UnauthorizedException {
+        String email = user_id.toString();
         return null;
     }
 
