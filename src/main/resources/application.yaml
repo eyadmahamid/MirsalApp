@@ -1,5 +1,4 @@
 spring:
-
   profiles:
     active: root
   datasource:
@@ -7,19 +6,10 @@ spring:
     username: root
     password: afnansql1302
     driver-class-name: com.mysql.cj.jdbc.Driver
-
-    server:
-      port: 8081
-
-
+  server:
+    port: 8081
   jpa:
     open-in-view: false
     hibernate:
       ddl-auto: update
     show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
-
-
-
