@@ -21,37 +21,25 @@ public class UserController {
     @Autowired
     private UserService userService; //bean
 
-    //get user by id
-
-//    public ResponseEntity<User> getUser(Long id) {
-//        return ResponseEntity.ok(userService.get_user_by_id(id));
-//    }
-@GetMapping(value = "/user/{id}")
-public ResponseEntity<?> get(@PathVariable Long id) {
-
-    try {
-        UserDTO userDTO = this.userService.get(id);
-        return ok(userDTO);
-
-    } catch (UnauthorizedException e) {
-        throw new RuntimeException(e);
+    @GetMapping(value = "/user/{id}")
+    public ResponseEntity<?> get(@PathVariable Long id) {
+        try {
+            UserDTO userDTO = this.userService.get(id);
+            return ResponseEntity.ok(userDTO);
+        } catch (UnauthorizedException e) {
+            throw new RuntimeException(e);
+        }
     }
-}
 
 
     @DeleteMapping("user/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         try {
-
             this.userService.delete(id);
-
-
+            return ResponseEntity.ok("User with ID: (" + id + ") deleted successfully.");
         }catch (UnauthorizedException e){
-
-
+            throw new RuntimeException(e);
         }
-
-
     }
 
 
@@ -71,10 +59,10 @@ public ResponseEntity<?> get(@PathVariable Long id) {
     @PostMapping(value = "user/signup")
     public ResponseEntity<?> signup(@Valid @RequestBody UserReqDTO user) {
         try {
-            UserRespoDTO addAcount = this.userService.signup(user);
-            return ok(addAcount);
+            UserRespoDTO addAccount = this.userService.signup(user);
+            return ResponseEntity.ok(addAccount);
         } catch (UserNotFoundException e) {
-            return badRequest().body(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -83,10 +71,9 @@ public ResponseEntity<?> get(@PathVariable Long id) {
     // Authenticate a user by email/phone number.
     @PostMapping("user/signin")
     public ResponseEntity<?> signin(@Valid @RequestBody UserSigninReqDTO user) throws UserNotFoundException {
-            String checkEmailOrUsername = user.getEmailOrUsername();
-            String password = user.getPassword();
+        String checkEmailOrUsername = user.getEmailOrUsername();
+        String password = user.getPassword();
         try{
-
           UserRespoDTO login =  userService.signin(user);
             return ResponseEntity.ok(login);
         }catch (UserNotFoundException e){

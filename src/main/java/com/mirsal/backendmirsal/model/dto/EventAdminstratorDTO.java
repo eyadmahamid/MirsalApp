@@ -11,7 +11,7 @@ import java.util.List;
 public class EventAdminstratorDTO {
 
 
-    private User userId;
+    private Long userId;
     private List<EventRespoDTO> events;
 
 

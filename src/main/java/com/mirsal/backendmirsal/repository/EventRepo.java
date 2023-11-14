@@ -1,6 +1,7 @@
 package com.mirsal.backendmirsal.repository;
 
 import com.mirsal.backendmirsal.model.Entity.Event;
+import com.mirsal.backendmirsal.model.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -10,6 +11,6 @@ public interface EventRepo extends JpaRepository<Event,Long> {
 
     Optional<Event> findByOrganizerId(Long organizer);
 
-    Optional<List<Event>> findAllByOrganizer(Long organizerId);
+//    Optional<List<Event>> findAllByOrganizer(Long organizer_id);
 
 }

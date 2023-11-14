@@ -24,7 +24,6 @@ import java.util.List;
 @Where(clause = "deleted_at is null")
 public class User {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")

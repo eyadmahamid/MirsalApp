@@ -12,6 +12,7 @@ import lombok.Data;
 public class UserSigninReqDTO {
 
 
+
 //    @NotNull(message = "Please enter a valid username")
     // If this username is already taken? = "Invalid username. Try again!")
 //    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Username can contain only letters and digits")
@@ -30,8 +31,13 @@ public class UserSigninReqDTO {
     @Builder.Default
     private boolean isActive=false;
 
-    public String getEmailOrUsername(){
-
+    private String emailOrUsername;
+    public String setEmailOrUsername(){
+        if(emailOrUsername.contains("@")){
+            email = emailOrUsername;
+        }else{
+            username= emailOrUsername;
+        }
         return email !=null  ? email : username;
     }
 }

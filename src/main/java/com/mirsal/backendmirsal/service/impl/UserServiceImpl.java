@@ -22,34 +22,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Long id )throws UnauthorizedException {
-
-//        Optional<User> userById = this.userRepo.findById(id);
-//
-//        if(!userById.isPresent()){
-//            throw new  UnauthorizedException("user Not Found with ID: " + id);
-//        }
-//        UserRespoDTO getUser = this.userMapper.toRespDTO(userById)
-//        if(!userRespoDTO.isActive()){
-//            throw new UnauthorizedException("User is not active and cannot be deleted.");
-//        }
-//
-//
-//        userById.get().setDeletedAt(LocalDateTime.now());
-//        userRepo.deleteById(id) ;
+        Optional<User> userById = this.userRepo.findById(id);
+        if (userById.isEmpty()) {
+            throw new UnauthorizedException("User Not Found with ID: " + id);
+        }
+        User user = userById.get();
+        if (!user.isActive()) {
+            throw new UnauthorizedException("User is not active and cannot be deleted.");
+        }
+        user.setDeletedAt(LocalDateTime.now());
+        userRepo.deleteById(id) ;
     }
 
     @Override
     public UserDTO get(Long id) throws UnauthorizedException {
         Optional<User> userById = this.userRepo.findById(id);
-        if(userById.isEmpty()){
-
+        if(userById.isPresent()){
             User user = userById.get();
             return this.userMapper.toDTO(user);
-
         }
-
-        throw new  UnauthorizedException("user Not Found with ID: " + id);
-
+        throw new UnauthorizedException("user Not Found with ID: " + id);
     }
 
 
@@ -68,10 +60,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserRespoDTO signin(UserSigninReqDTO req) throws UserNotFoundException {
-        String identifier = req.getEmailOrUsername();
+        req.setEmailOrUsername();
         String password = req.getPassword();
 
-        User user = this.userRepo.findByEmailOrUsername(identifier, identifier);
+        User user = this.userRepo.findByEmailOrUsername(req.getEmail(), req.getUsername());
 
         if (user == null || !password.equals(user.getPassword())) {
             throw new UserNotFoundException("Invalid E-mail/username or password");
