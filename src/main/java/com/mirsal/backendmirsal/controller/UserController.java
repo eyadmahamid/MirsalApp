@@ -71,7 +71,7 @@ public class UserController {
     // Authenticate a user by email/phone number.
     @PostMapping("user/signin")
     public ResponseEntity<?> signin(@Valid @RequestBody UserSigninReqDTO user) throws UserNotFoundException {
-        String checkEmailOrUsername = user.getEmailOrUsername();
+        user.setEmailOrUsername();
         String password = user.getPassword();
         try{
           UserRespoDTO login =  userService.signin(user);

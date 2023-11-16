@@ -18,9 +18,9 @@ public interface EventService {
 
     EventRespoDTO update(Long id,UpdateEventReqDTO updateEventReqDTO) throws NotFoundException, UnauthorizedException;
 
-    void deleteEventById(Long event_id, DeleteEventReqDTO deleteEventReqDTO) throws NotFoundException,UnauthorizedException;
+    void deleteEventById(Long event_id, Long user_id) throws NotFoundException,UnauthorizedException;
 
-//    List<EventRespoDTO> getOrganizerEvents (EventAdminstratorDTO req) throws NotFoundException,UnauthorizedException;
+    List<EventRespoDTO> getOrganizerEvents (EventAdminstratorDTO req) throws NotFoundException,UnauthorizedException;
 
 
     EventDTO get(Long event_id) throws NotFoundException;

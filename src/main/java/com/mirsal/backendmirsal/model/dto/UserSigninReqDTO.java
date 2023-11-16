@@ -32,12 +32,11 @@ public class UserSigninReqDTO {
     private boolean isActive=false;
 
     private String emailOrUsername;
-    public String setEmailOrUsername(){
+    public void setEmailOrUsername(){
         if(emailOrUsername.contains("@")){
             email = emailOrUsername;
         }else{
             username= emailOrUsername;
         }
-        return email !=null  ? email : username;
     }
 }

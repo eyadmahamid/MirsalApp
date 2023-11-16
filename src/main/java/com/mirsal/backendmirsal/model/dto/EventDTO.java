@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 public class EventDTO {
 
 
-    private Long id;
+    private Long event_id;
 
-    private User organizer_id;
+    private Long organizer_id;
 
     private String location;
 
@@ -26,5 +26,4 @@ public class EventDTO {
 
     private LocalDateTime updatedAt;
 
-    private LocalDateTime deletedAt;
 }

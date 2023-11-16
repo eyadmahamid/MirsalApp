@@ -12,18 +12,13 @@ import java.util.Date;
 @Builder
 public class EventReqDTO {
 
-    private User organizer_id;
-
     private String occasion;
 
     private String location;
 
     private String description;
 
-
     @FutureOrPresent
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date date;
-
-
 }

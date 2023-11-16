@@ -8,6 +8,6 @@ import lombok.Data;
 public class DeleteEventReqDTO {
 
     private Long userId;
-
     private Long eventId;
+
 }

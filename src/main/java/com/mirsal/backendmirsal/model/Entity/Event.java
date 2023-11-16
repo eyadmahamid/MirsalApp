@@ -58,6 +58,9 @@ public class Event {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+//    @Column(name = "organizer_id")
+//    private Long organizer_id;
+
 //    the Manager who created the event
     @ManyToOne
     @JoinColumn(name = "organizer_id")
@@ -70,5 +73,10 @@ public class Event {
         inverseJoinColumns = @JoinColumn(name = "event_id"))
 private List<User> invitedUsers;
 
+@ManyToMany
+@JoinTable(name = "event_managers",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "event_id"))
+private List<User> managers;
 
 }

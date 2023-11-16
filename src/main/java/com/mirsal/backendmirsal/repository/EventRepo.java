@@ -11,6 +11,6 @@ public interface EventRepo extends JpaRepository<Event,Long> {
 
     Optional<Event> findByOrganizerId(Long organizer);
 
-//    Optional<List<Event>> findAllByOrganizer(Long organizer_id);
+    Optional<List<Event>> findAllByOrganizerId(Long organizer_id);
 
 }

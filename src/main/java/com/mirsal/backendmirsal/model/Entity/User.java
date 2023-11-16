@@ -72,12 +72,6 @@ public class User {
     @ManyToMany(mappedBy = "invitedUsers")
     private List<Event> eventsAttending;
 
-//    The administrator identifies USERS to ivnite other users
-//    Sending the invitation includes application users and others, this is done by sending an (e-mail or phone number).
-@ManyToMany(mappedBy = "addByUsers")
-private List<Invitation> addedInvitaions;
-
-
 }
 
 
