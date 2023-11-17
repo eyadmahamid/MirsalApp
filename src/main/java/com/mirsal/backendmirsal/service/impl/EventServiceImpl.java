@@ -11,6 +11,7 @@ import com.mirsal.backendmirsal.repository.EventRepo;
 import com.mirsal.backendmirsal.repository.UserRepo;
 import com.mirsal.backendmirsal.service.EventService;
 import com.mirsal.backendmirsal.service.UserService;
+import jakarta.validation.constraints.Null;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -68,11 +69,14 @@ public class EventServiceImpl implements EventService {
             throw new UnauthorizedException("User " + user.getUsername() + " is not authorized to update this event.");
         }
 
-        event.setOccasion(req.getOccasion());
+        if(req.getOccasion()!= null){
+            event.setOccasion(req.getOccasion());
+        }
         event.setDescription(req.getDescription());
         event.setDate(req.getDate());
+        event.setLocation(req.getLocation());
         event.setUpdatedAt(LocalDateTime.now());
-//        Event updateEvent = this.eventRepo.save(event);
+//        this.eventRepo.save(event);
 
         return this.eventMapper.toRespDTO(event);
     }

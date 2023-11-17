@@ -10,6 +10,8 @@ import java.util.Date;
 
 public class EventRespoDTO {
 
+    private Long event_id;
+
     private Long organizer_id;
 
     private String occasion;

@@ -55,10 +55,10 @@ public class EventController {
     }
 
     @PutMapping(value = "event/update")
-    public ResponseEntity<?> update_event(Long user_id, @Valid @RequestBody UpdateEventReqDTO event) throws UserNotFoundException, UnauthorizedException {
+    public ResponseEntity<?> update_event(@PathVariable Long user_id, @Valid @RequestBody UpdateEventReqDTO event) throws UserNotFoundException, UnauthorizedException {
         try {
             EventRespoDTO updatedEvent = this.eventService.update(user_id, event);
-            return ok(updatedEvent);
+            return ResponseEntity.ok(updatedEvent);
         } catch (NotFoundException | UnauthorizedException e) {
             return badRequest().body(e.getMessage());
         }

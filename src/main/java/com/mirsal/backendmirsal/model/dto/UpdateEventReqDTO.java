@@ -14,11 +14,11 @@ public class UpdateEventReqDTO {
 
     private Long event_id;
 
-    private Long organizer_id;
-
     private String occasion;
 
     private String description;
+    
+    private String location;
 
     @FutureOrPresent
     @DateTimeFormat(pattern = "yyyy-MM-dd")
