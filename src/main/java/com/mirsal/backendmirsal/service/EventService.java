@@ -15,8 +15,9 @@ public interface EventService {
 
     EventRespoDTO create_event(Long id, EventReqDTO eventReqDTO) throws NotFoundException,UnauthorizedException;
 
+    void addManager(Long event_id,User manager) throws NotFoundException,UnauthorizedException;
 
-    EventRespoDTO update(Long id,UpdateEventReqDTO updateEventReqDTO) throws NotFoundException, UnauthorizedException;
+    EventRespoDTO update(Long user_id,Long event_id,UpdateEventReqDTO updateEventReqDTO) throws NotFoundException, UnauthorizedException;
 
     void deleteEventById(Long event_id, Long user_id) throws NotFoundException,UnauthorizedException;
 
@@ -25,7 +26,7 @@ public interface EventService {
 
     EventDTO get(Long event_id) throws NotFoundException;
 
-    List<EventDTO> get_admin_events (Long user_id) throws UnauthorizedException;
+    List<EventDTO> get_manager_events (Long user_id) throws UnauthorizedException;
 
 
 }

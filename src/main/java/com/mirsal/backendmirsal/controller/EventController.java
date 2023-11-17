@@ -8,21 +8,18 @@ import com.mirsal.backendmirsal.service.EventService;
 import com.mirsal.backendmirsal.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import static org.springframework.http.ResponseEntity.badRequest;
-import static org.springframework.http.ResponseEntity.ok;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/{user_id}/events")
 public class EventController {
 
     private final EventService eventService;
-    private final UserService userService;
 
     @GetMapping(value="/event/{event_id}")
     public ResponseEntity<?> get (@PathVariable Long event_id) throws NotFoundException {
@@ -54,18 +51,19 @@ public class EventController {
         }
     }
 
-    @PutMapping(value = "event/update")
-    public ResponseEntity<?> update_event(@PathVariable Long user_id, @Valid @RequestBody UpdateEventReqDTO event) throws UserNotFoundException, UnauthorizedException {
+    @PutMapping(value = "event/{event_id}")
+    public ResponseEntity<?> update_event(@PathVariable Long user_id, @PathVariable Long event_id, @Valid @RequestBody UpdateEventReqDTO event) throws UserNotFoundException, UnauthorizedException {
         try {
-            EventRespoDTO updatedEvent = this.eventService.update(user_id, event);
+            EventRespoDTO updatedEvent = this.eventService.update(user_id, event_id,event);
             return ResponseEntity.ok(updatedEvent);
         } catch (NotFoundException | UnauthorizedException e) {
             return badRequest().body(e.getMessage());
         }
     }
 
-    @GetMapping(value="/event/organizer/{id}")
-    public ResponseEntity<?> get_organizer_events (@PathVariable EventAdminstratorDTO req) throws NotFoundException{
+
+    @GetMapping(value="/event/organizer/{event_id}")
+    public ResponseEntity<?> get_organizer_events (EventAdminstratorDTO req) throws NotFoundException{
         try{
             List<EventRespoDTO> organizerEvents = this.eventService.getOrganizerEvents(req);
             return ResponseEntity.ok(organizerEvents);
@@ -77,7 +75,7 @@ public class EventController {
     @GetMapping(value="/event/admin/{manager_id}")
     public ResponseEntity<?> get_admin_events (@PathVariable Long manager_id){
         try{
-            List<EventDTO> adminEvents = this.eventService.get_admin_events(manager_id);
+            List<EventDTO> adminEvents = this.eventService.get_manager_events(manager_id);
             return ResponseEntity.ok(adminEvents);
         } catch (UnauthorizedException e) {
             throw new RuntimeException(e);

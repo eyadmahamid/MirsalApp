@@ -1,5 +1,6 @@
 package com.mirsal.backendmirsal.model.Entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -12,6 +13,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -62,21 +64,22 @@ public class Event {
 //    private Long organizer_id;
 
 //    the Manager who created the event
-    @ManyToOne
+@ManyToOne
     @JoinColumn(name = "organizer_id")
     private User organizer;
 
-//    Registered Users who were invited
-@ManyToMany
-@JoinTable(name = "event_invitations",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "event_id"))
-private List<User> invitedUsers;
 
-@ManyToMany
-@JoinTable(name = "event_managers",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "event_id"))
-private List<User> managers;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "event_managers",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id"))
+    private List<User> managers;
+
+    public void addManager(User manager) {
+        if (this.managers == null) {
+            this.managers = new ArrayList<>();
+        }
+        this.managers.add(manager);
+    }
 
 }

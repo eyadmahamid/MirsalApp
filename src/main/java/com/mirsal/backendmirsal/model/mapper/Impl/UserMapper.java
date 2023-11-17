@@ -14,6 +14,9 @@ public interface UserMapper {
     UserRespoDTO toRespDTO(User Entity);
     UserDTO toDTO(User Entity);
 
+    EventManagerDTO userToEventManagerDTO(User user);
+
+
 }
 
 /**
