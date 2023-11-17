@@ -54,15 +54,18 @@ public class EventController {
         }
     }
 
-    @PutMapping(value = "event/update")
-    public ResponseEntity<?> update_event(Long user_id, @Valid @RequestBody UpdateEventReqDTO event) throws UserNotFoundException, UnauthorizedException {
+    @PutMapping(value = "event/{event_id}")
+    public ResponseEntity<?> update_event(@PathVariable Long user_id, @PathVariable Long event_id, @Valid @RequestBody UpdateEventReqDTO event) throws UserNotFoundException, UnauthorizedException {
+
+
         try {
-            EventRespoDTO updatedEvent = this.eventService.update(user_id, event);
-            return ok(updatedEvent);
+            EventRespoDTO updatedEvent = this.eventService.update(user_id, event_id,event);
+            return ResponseEntity.ok(updatedEvent);
         } catch (NotFoundException | UnauthorizedException e) {
             return badRequest().body(e.getMessage());
         }
     }
+
 
     @GetMapping(value="/event/organizer/{id}")
     public ResponseEntity<?> get_organizer_events (@PathVariable EventAdminstratorDTO req) throws NotFoundException{
@@ -77,7 +80,7 @@ public class EventController {
     @GetMapping(value="/event/admin/{manager_id}")
     public ResponseEntity<?> get_admin_events (@PathVariable Long manager_id){
         try{
-            List<EventDTO> adminEvents = this.eventService.get_admin_events(manager_id);
+            List<EventDTO> adminEvents = this.eventService.get_manager_events(manager_id);
             return ResponseEntity.ok(adminEvents);
         } catch (UnauthorizedException e) {
             throw new RuntimeException(e);

@@ -29,11 +29,11 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "username")
+    @Column(name = "username",unique = true)
     @NotNull
         private String username;
 
-    @Column(name = "email")
+    @Column(name = "email",unique = true)
     @Email
     @NotNull
         private String email;
@@ -68,9 +68,7 @@ public class User {
     @OneToMany(mappedBy = "organizer")
     private List<Event> organizedEvents;
 
-//  Users Registered in the Mirsal.app can be invited to many events
-    @ManyToMany(mappedBy = "invitedUsers")
-    private List<Event> eventsAttending;
+
 
 }
 

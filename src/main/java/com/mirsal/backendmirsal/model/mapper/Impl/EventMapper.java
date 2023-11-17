@@ -5,6 +5,9 @@ import com.mirsal.backendmirsal.model.Entity.Event;
 import com.mirsal.backendmirsal.model.Entity.User;
 import com.mirsal.backendmirsal.model.dto.*;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface EventMapper {
@@ -14,4 +17,9 @@ public interface EventMapper {
 
     EventRespoDTO toRespDTO(Event Entity);
     EventDTO toDTO(Event Entity);
+
+    User toUser(EventManagerDTO dto);
+
+
+
 }
