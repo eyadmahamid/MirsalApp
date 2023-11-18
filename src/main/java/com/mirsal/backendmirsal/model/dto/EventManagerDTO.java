@@ -6,18 +6,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
-public class EventManagerDTO extends User {
-
+public class EventManagerDTO {
     private Long user_id;
 
     private String username;
 
     @Email
     private String email;
-
 
     private String phoneNumber;
 }

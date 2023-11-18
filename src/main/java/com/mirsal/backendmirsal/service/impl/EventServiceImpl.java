@@ -15,6 +15,7 @@ import com.mirsal.backendmirsal.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -85,6 +86,18 @@ public class EventServiceImpl implements EventService {
             throw new NotFoundException("Organizer " + user.getUsername() + " is not active.");
         }
 
+        updateEventFields(event, req);
+        this.eventRepo.save(event);
+
+        event = this.eventRepo.findById(event_id)
+                .orElseThrow(() -> new NotFoundException("Event Not Found with ID: " + event_id));
+
+        return this.eventMapper.toRespDTO(event);
+    }
+
+
+    private void updateEventFields(Event event, UpdateEventReqDTO req) throws NotFoundException, UnauthorizedException {
+
         if(req.getDate() != null){
             event.setDate(req.getDate());
         }
@@ -95,19 +108,17 @@ public class EventServiceImpl implements EventService {
             event.setOccasion(req.getOccasion());
         }
         if(req.getDescription() != null){
-           event.setDescription(req.getDescription());
+            event.setDescription(req.getDescription());
         }
-        event.setUpdatedAt(LocalDateTime.now());
 
-        if(req.getManagers() != null) {
-            for(int i=0 ; i< req.getManagers().size() ; i++){
-                addManager(event_id,req.getManagers().get(i));
+        if(req.getManagers() != null){
+            for (User manager : req.getManagers()) {
+                addManager(event.getEvent_id(), manager);
             }
         }
-        this.eventRepo.save(event);
-        return this.eventMapper.toRespDTO(event);
+        
+        event.setUpdatedAt(LocalDateTime.now());
     }
-
 
     @Override
     public void deleteEventById(Long event_id , Long user_id) throws NotFoundException,UnauthorizedException {
@@ -174,7 +185,6 @@ public class EventServiceImpl implements EventService {
         eventDTO.setEvent_id(event_id);
         eventDTO.setOrganizer_id(event.getOrganizer().getId());
         return eventDTO;
-
     }
 
     @Override

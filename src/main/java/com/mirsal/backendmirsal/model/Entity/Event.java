@@ -1,6 +1,7 @@
 package com.mirsal.backendmirsal.model.Entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.mirsal.backendmirsal.model.dto.EventManagerDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -33,7 +34,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "event_id")
-    private Long eventId;
+    private Long event_id;
 
     @Column(name = "event_date")
     @FutureOrPresent

@@ -1,10 +1,8 @@
 package com.mirsal.backendmirsal.model.dto;
 
-
 import com.mirsal.backendmirsal.model.Entity.User;
 import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+
 import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -25,7 +23,7 @@ public class UpdateEventReqDTO {
     private String description;
 
     @Builder.Default
-    private List<User> managers;
+    private List<User> managers = new ArrayList<>();
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
